@@ -1,6 +1,7 @@
 ﻿using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
+using MultiTenancyAzureAD.Main.Extensions;
 using Owin;
 using System.Collections.Generic;
 using System.Configuration;
@@ -22,7 +23,9 @@ namespace MultiTenancyAzureAD.Main
 
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions { });
+            app.UseCookieAuthentication(new CookieAuthenticationOptions {
+                CookieManager = new SystemWebCookieManager()
+            });
 
             app.UseOpenIdConnectAuthentication(
                 new OpenIdConnectAuthenticationOptions

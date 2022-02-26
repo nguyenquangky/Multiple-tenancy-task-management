@@ -204,6 +204,7 @@
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Extensions\MultiTenantViewEngine.cs" />
     <Compile Include="Extensions\Ninject\NinjectWebCommon.cs" />
+    <Compile Include="Extensions\SystemWebCookieManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

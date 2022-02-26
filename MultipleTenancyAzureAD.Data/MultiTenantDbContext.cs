@@ -1,5 +1,6 @@
 ﻿using MultipleTenancyAzureAD.Core;
 using MultiTenancyAzureAD.Core;
+using System.Configuration;
 using System.Data.Entity;
 
 namespace MultiTenancyAzureAD.Data
@@ -20,12 +21,12 @@ namespace MultiTenancyAzureAD.Data
 
         private static string ConnectionString()
         {
-            //Tenant t = new TenantService().Tenant;
             Tenant t = TenantHelper.Tenant;
             if(t == null)
             {
                 // fix case of run update-database
                 // use default connection string
+                return ConfigurationManager.AppSettings["tenantConnectionString:Development"];
             }
             return t.ConnectionString;
         }

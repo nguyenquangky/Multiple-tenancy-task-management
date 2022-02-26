@@ -9,42 +9,43 @@ namespace MultipleTenancyAzureAD.Core
 {
     public static class TenantHelper
     {
-        //private static ClaimsIdentity UserClaims
-        //{
-        //    get
-        //    {
-        //        return HttpContext.Current.User.Identity as ClaimsIdentity;
-        //    }
-        //}
         public static Tenant Tenant
         {
             get
             {
-                if (HttpContext.Current.User != null)
+                try
                 {
-                    var claim = HttpContext.Current.User.Identity as ClaimsIdentity;
-                    Tenant t = new Tenant();
-                    if (claim.IsAuthenticated)
+                    if (HttpContext.Current.User != null)
                     {
-                        t.Id = claim?.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid")?.Value;
-
-                        if (t.Id == null)
+                        var claim = HttpContext.Current.User.Identity as ClaimsIdentity;
+                        Tenant t = new Tenant();
+                        if (claim.IsAuthenticated)
                         {
-                            throw new InvalidOperationException("Tenant is not found");
+                            t.Id = claim?.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid")?.Value;
+
+                            if (t.Id == null)
+                            {
+                                throw new InvalidOperationException("Tenant is not found");
+                            }
+                            t.Name = ConfigurationManager.AppSettings[$"tenantName:{t.Id}"]?.ToString();
+                            t.ConnectionString = ConfigurationManager.AppSettings[$"tenantConnectionString:{t.Id}"]?.ToString();
+                            return t;
                         }
-                        t.Name = ConfigurationManager.AppSettings[$"tenantName:{t.Id}"]?.ToString();
-                        t.ConnectionString = ConfigurationManager.AppSettings[$"tenantConnectionString:{t.Id}"]?.ToString();
-                        return t;
+                        else
+                        {
+                            // not autheticated user
+                            return null;
+                        }
                     }
                     else
                     {
-                        // not autheticated user
+                        // anomynous user
                         return null;
                     }
                 }
-                else
+                catch(Exception ex)
                 {
-                    // anomynous user
+                    // for running update-database
                     return null;
                 }
             }

@@ -57,20 +57,5 @@ namespace MultiTenancyAzureAD.Main
                     }
                 });
         }
-
-        //private static string EnsureTrailingSlash(string value)
-        //{
-        //    if (value == null)
-        //    {
-        //        value = string.Empty;
-        //    }
-
-        //    if (!value.EndsWith("/", StringComparison.Ordinal))
-        //    {
-        //        return value + "/";
-        //    }
-
-        //    return value;
-        //}
     }
 }

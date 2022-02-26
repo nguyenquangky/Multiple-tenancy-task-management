@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    string id = (string)ViewBag.TenantId;
+    string name = (string)ViewBag.TenantName;
+}
+
+<div class="row">
+    <hr />
+    <div>
+        <h4>Multiple tenancy application - Home page</h4>
+        <div>Tenant Id: @id</div>
+        <div>Tenant Name: @name</div>
+    </div>
+</div>
